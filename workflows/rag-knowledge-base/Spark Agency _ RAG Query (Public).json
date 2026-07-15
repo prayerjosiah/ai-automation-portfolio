@@ -1,0 +1,222 @@
+{
+  "name": "Spark Agency | RAG Query (Public)",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hey there! 👋 How can I help you today?",
+        "options": {
+          "responseMode": "responseNodes"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "64aaec34-9dfb-4e2b-9c71-ad62c1ce27da",
+      "name": "When chat message received",
+      "webhookId": "c7e92609-692d-4af4-b5a3-d576a82a4292"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a friendly and knowledgeable AI assistant for Spark Social Media Agency. Your job is to help potential and existing clients by answering their questions accurately and warmly.\n\nWhen answering questions, always search the knowledge base first. Here are some specific guidelines:\n\n- For pricing questions, always share all three packages: Starter $500/month, Growth $1,500/month, Scale $3,000/month\n- For refund questions, explain that monthly retainers are generally non-refundable once work has begun, but refund requests before onboarding starts may be considered case by case\n- For cancellation questions, mention the 30 day written notice after the minimum contract period\n- For any question you can't find in the knowledge base, warmly redirect to the team\n\nAlways maintain a warm, friendly and professional tone. You represent Spark's brand so every response should feel like it came from a helpful team member, not a robot.\n\nNever make up information. If unsure, say:\n\"That's a great question! I want to make sure I give you accurate information — let me connect you with our team who can help. Would you like to book a free discovery call at https://calendly.com/prayerjosiah/discovery-call?\"\n\nAlways end responses by offering further help or guiding toward a discovery call naturally.\n\nNever start a response with \"Generally\" or \"Typically\" — start with something warmer like \"Great question!\" or \"Thanks for asking!\" or just go straight into the answer in a friendly tone."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        288,
+        0
+      ],
+      "id": "b28e356f-f52b-4909-8afc-b3ecea66133c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        224
+      ],
+      "id": "6fc700a4-4191-4560-97c9-25e0f11450c7",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "L6fxajsbuG1b8qFu",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        352,
+        224
+      ],
+      "id": "2ee5dd96-d857-4595-9a5e-f9d19f3fbafc",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Search the Spark Social Media Agency knowledge base to find accurate information about services, pricing, packages, policies, and case studies. Use this tool whenever a user asks any question about the agency.",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "spark-agency",
+          "mode": "list",
+          "cachedResultName": "spark-agency"
+        },
+        "options": {
+          "pineconeNamespace": "public"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        480,
+        224
+      ],
+      "id": "07acbefd-1cb8-4a94-b489-b9bc26151bbe",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "qPc80lCkLqQ7U5sh",
+          "name": "Pinecone account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-ada-002",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        560,
+        432
+      ],
+      "id": "1a86096a-498a-4998-a450-e6412e9bded0",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "L6fxajsbuG1b8qFu",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        640,
+        0
+      ],
+      "id": "e832305e-741c-49f8-9a89-5f9961a76f00",
+      "name": "Chat",
+      "webhookId": "fdff16d8-b01c-4f01-8594-64f7bd671839"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "8acf83f4-77af-43ee-b4e9-0af167faf675",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7fe7b02f77ce0bdbbb703e0afe924ea6533b4e520a756abb0df409f6a4adb000"
+  },
+  "nodeGroups": [],
+  "id": "3mBT00iOM6MMf6Z7",
+  "tags": []
+}

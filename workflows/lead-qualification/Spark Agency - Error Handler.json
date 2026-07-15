@@ -1,0 +1,73 @@
+{
+  "name": "Spark Agency - Error Handler",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "3943451c-85e0-4a9b-8569-4d7a93cb698c",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0BH6ECCG90",
+          "mode": "list",
+          "cachedResultName": "automation-errors"
+        },
+        "text": "=⚠️ Workflow Error\nWorkflow: {{ $json.workflow.name }}\nFailed Node: {{ $json.execution.lastNodeExecuted }}\nError: {{ $json.execution.error.message }}\nExecution: {{ $json.execution.url }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        208,
+        0
+      ],
+      "id": "a9343c32-f124-476a-8c4f-1c4b0811ff57",
+      "name": "Send a message",
+      "webhookId": "429a16de-a267-4950-81be-b60493d9cd55",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "YcUI4PEXtriJi6m7",
+          "name": "Slack OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "4e72189b-b4d4-410c-ba4a-d7c81da194e3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7fe7b02f77ce0bdbbb703e0afe924ea6533b4e520a756abb0df409f6a4adb000"
+  },
+  "nodeGroups": [],
+  "id": "9Q0UzOKAiBe8yxXt",
+  "tags": []
+}

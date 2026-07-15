@@ -1,0 +1,645 @@
+{
+  "name": "Social Media Agency (Lead Qualification)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "0663cc78-7f8b-4b46-9ba6-391cda5d3231",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        96
+      ],
+      "id": "15d4d7e2-fa9f-43fd-89e2-1337166ef19d",
+      "name": "Webhook",
+      "webhookId": "0663cc78-7f8b-4b46-9ba6-391cda5d3231"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "36148813-2663-4b5b-be1e-ae7efbdc1800",
+              "name": "First Name",
+              "value": "={{ $json.body.data.fields[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "22ca60ae-c650-4db5-b054-21ada3b8c998",
+              "name": "Last Name",
+              "value": "={{ $json.body.data.fields[1].value }}",
+              "type": "string"
+            },
+            {
+              "id": "0d70c3fe-a9e4-4727-86e9-eefe0852d342",
+              "name": "Email",
+              "value": "={{ $json.body.data.fields[2].value }}",
+              "type": "string"
+            },
+            {
+              "id": "dd1c4b98-e2ea-4d9c-994d-cb4f8d851c59",
+              "name": "Business Name",
+              "value": "={{ $json.body.data.fields[3].value }}",
+              "type": "string"
+            },
+            {
+              "id": "9ea2a3ad-c3a8-4644-bdd8-cc697618f1ef",
+              "name": "What type of business do you run?",
+              "value": "={{ $json.body.data.fields[4].value }}",
+              "type": "string"
+            },
+            {
+              "id": "bc91f10a-c61a-48b1-970b-c5ffa4339d93",
+              "name": "How long have you been in business?",
+              "value": "={{ $json.body.data.fields[5].value }}",
+              "type": "string"
+            },
+            {
+              "id": "08e577f0-d34d-45ec-997d-abe19886dbec",
+              "name": "What's your monthly budget for social media management?",
+              "value": "={{ $json.body.data.fields[6].value }}",
+              "type": "string"
+            },
+            {
+              "id": "a73f4346-3328-40bc-b353-6efba9845cdd",
+              "name": "Which platforms are you currently on?",
+              "value": "={{ $json.body.data.fields[7].value }}",
+              "type": "string"
+            },
+            {
+              "id": "d1ba7eb9-6535-4607-9383-07980efc2443",
+              "name": "What's your biggest goal right now?",
+              "value": "={{ $json.body.data.fields[8].value }}",
+              "type": "string"
+            },
+            {
+              "id": "bf559df3-bbba-4685-94f5-ebe72861a61d",
+              "name": "Anything else you'd like us to know?",
+              "value": "={{ $json.body.data.fields[9].value }}",
+              "type": "string"
+            },
+            {
+              "id": "a385c0c0-953b-47e1-b747-b5ce894a6cb7",
+              "name": "submitted at",
+              "value": "={{ new Date($json.body.data.createdAt).toLocaleString('en-US', { timeZone: 'Asia/Manila', month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) }}",
+              "type": "string"
+            },
+            {
+              "id": "a1e88915-3bd8-4b7d-8e8a-bce06e7c32e8",
+              "name": "submitted_at",
+              "value": "={{ $json.body.data.createdAt }}",
+              "type": "string"
+            },
+            {
+              "id": "bcb368b9-5e3d-4217-aa55-77dfe5b1c14c",
+              "name": "What type of business do you run?",
+              "value": "={{ $json.body.data.fields[4].value }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        96
+      ],
+      "id": "98341723-afae-456a-b085-d817ecc9992d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are a lead qualification assistant for a social media marketing agency. Your job is to evaluate incoming leads and decide if they are worth pursuing.\n\nA lead is QUALIFIED if they meet ALL of the following criteria:\n- Monthly budget is $500 or more\n- Has been in business for at least 6 months\n- Has a clear and specific goal beyond just \"more followers\"\n- Runs a real business (not a personal project or hobby)\n\nA lead is UNQUALIFIED if they fail any of the above criteria.\n\nYou must respond in this exact JSON format and nothing else:\n{\n  \"qualified\": true or false,\n  \"reason\": \"one sentence explaining your decision\",\n  \"lead_first_name\": \"their first name\",\n  \"lead_last_name\": \"their last name\",\n  \"lead_email\": \"their email address\",\n  \"business_name\": \"their business name\",\n  \"budget\": \"their stated budget\",\n  \"goal\": \"their stated goal\",\n  \"platforms\": \"platforms they're currently active on\",\n  \"additional_notes\": \"anything else they shared, summarized in one short phrase\"\n}\nDo not add any explanation outside the JSON. Do not add markdown or code blocks. Return raw JSON only."
+            },
+            {
+              "content": "=Please qualify the following lead:\nFirst Name: {{ $json['First Name'] }}\nLast Name: {{ $json['Last Name'] }}\nEmail: {{ $json['Email'] }}\nBusiness Name: {{ $json['Business Name'] }}\nBusiness Type: {{ $json['What type of business do you run?'] }}\nTime in Business: {{ $json['How long have you been in business?'] }}\nMonthly Budget: {{ $json[\"What's your monthly budget for social media management?\"] }}\nCurrent Platforms: {{ $json['Which platforms are you currently on?'] }}\nGoal: {{ $json[\"What's your biggest goal right now?\"] }}\nAdditional Info: {{ $json[\"Anything else you'd like us to know?\"] }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        96
+      ],
+      "id": "752eeac9-2526-4af3-9ed5-a2830b8f175a",
+      "name": "Message a model",
+      "alwaysOutputData": false,
+      "credentials": {
+        "openAiApi": {
+          "id": "L6fxajsbuG1b8qFu",
+          "name": "OpenAI account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "try {\n  const raw = $input.first().json.output[0].content[0].text;\n  const parsed = JSON.parse(raw);\n  return [{ json: { ...parsed, parse_success: true } }];\n} catch (e) {\n  return [{ \n    json: { \n      parse_success: false, \n      raw_output: $input.first().json.output[0].content[0].text,\n      error: e.message,\n      lead_name: $('Edit Fields').item.json['First Name'],\n      lead_email: $('Edit Fields').item.json.Email\n    } \n  }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        0
+      ],
+      "id": "93a1c571-d021-4c48-97e1-aee3329ce636",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "fa6fa443-0426-4917-8108-4383d3576a9f",
+              "leftValue": "={{ $json.qualified }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1024,
+        0
+      ],
+      "id": "d1e49b6f-344a-4023-9903-02e2b7839f14",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "email": "={{ $json.lead_email }}",
+        "additionalFields": {
+          "companyName": "={{ $('Code in JavaScript').item.json.business_name }}",
+          "firstName": "={{ $json.lead_first_name }}",
+          "lastName": "={{ $json.lead_last_name }}",
+          "leadStatus": "NEW",
+          "startDate": "={{ $('Edit Fields').item.json.submitted_at }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.2,
+      "position": [
+        1248,
+        -96
+      ],
+      "id": "4bd0b8e4-10db-4d90-a79c-2c626b51f34d",
+      "name": "Create or update a contact",
+      "credentials": {
+        "hubspotOAuth2Api": {
+          "id": "nmQKyF8pxJL13hcI",
+          "name": "HubSpot OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "engagement",
+        "type": "task",
+        "dueDate": "={{ new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() }}",
+        "metadata": {
+          "body": "=Budget: {{ $('Code in JavaScript').item.json.budget }} <br>\nGoal: {{ $('Edit Fields').item.json['What\\'s your biggest goal right now?'] }} <br>\nTime in Business: {{ $('Edit Fields').item.json['How long have you been in business?'] }} <br>\nAI Decision: {{ $('Code in JavaScript').item.json.qualified }}"
+        },
+        "additionalFields": {
+          "associations": {
+            "contactIds": "={{ $json.vid }}"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.2,
+      "position": [
+        1472,
+        -96
+      ],
+      "id": "fbd07bd0-3cac-4320-b1c8-452363a0c3c4",
+      "name": "Create an engagement",
+      "credentials": {
+        "hubspotOAuth2Api": {
+          "id": "nmQKyF8pxJL13hcI",
+          "name": "HubSpot OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0BE8SCL55H",
+          "mode": "list",
+          "cachedResultName": "qualified-leads"
+        },
+        "text": "=🔥 *New Qualified Lead!*\n\n*First Name:* {{ $('Code in JavaScript').item.json.lead_first_name }}\n*Last Name:* {{ $('Edit Fields').item.json['Last Name'] }}\n*Email:* {{ $('Edit Fields').item.json.Email }}\n*Business:* {{ $('Edit Fields').item.json['What type of business do you run?'] }}\n*Business Name:* {{ $('Edit Fields').item.json['Business Name'] }}\n*Budget:* {{ $('Edit Fields').item.json['What\\'s your monthly budget for social media management?'] }}\n*Goal:* {{ $('Edit Fields').item.json['What\\'s your biggest goal right now?'] }}\n*Time in Business:* {{ $('Edit Fields').item.json['How long have you been in business?'] }}\n*Platforms on already* {{ $('Code in JavaScript').item.json.platforms }}\n*Submitted:* {{ $('Edit Fields').item.json['submitted at'] }}\n\n*AI Decision:* {{ $('Code in JavaScript').item.json.reason }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        1696,
+        -96
+      ],
+      "id": "f32e4064-0678-4ce2-84a3-7513a9b62fb7",
+      "name": "Send a message",
+      "webhookId": "ccfb960c-6e83-4165-b793-c9c98bd81c12",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "YcUI4PEXtriJi6m7",
+          "name": "Slack OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Code in JavaScript').item.json.lead_email }}",
+        "subject": "=We'd love to work with you, {{ $('Code in JavaScript').item.json.lead_first_name }}",
+        "emailType": "text",
+        "message": "=Hi {{ $('Code in JavaScript').item.json.lead_first_name }},  \n\nThank you for reaching out to us! We've reviewed your inquiry and we're excited to let you know that {{ $('Code in JavaScript').item.json.business_name }} is a great fit for our social media management services.  \n\nHere's what happens next:  \n\n1. A member of our team will reach out within 24 hours to schedule a discovery call \n2. We'll discuss your goals and put together a custom strategy for {{ $('Code in JavaScript').item.json.business_name }} \n3. We'll get you started on building a brand that grows  \n\nIn the meantime, feel free to check out our recent work and case studies at https://brightreachsolutions.com.  We're looking forward to working with you!  \n\nWarm regards, \n\nThe Bright Reach Solutions Team",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1920,
+        -96
+      ],
+      "id": "ee53ea6c-12b8-469a-b790-2487df935936",
+      "name": "Send a message1",
+      "webhookId": "32480049-3511-486c-99c0-abb75c5bfc3c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "0zRxEVvfl1IfEljL",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "email": "={{ $('Code in JavaScript').item.json.lead_email }}",
+        "additionalFields": {
+          "companyName": "={{ $('Code in JavaScript').item.json.business_name }}",
+          "firstName": "={{ $('Code in JavaScript').item.json.lead_first_name }}",
+          "lastName": "={{ $('Code in JavaScript').item.json.lead_last_name }}",
+          "leadStatus": "UNQUALIFIED",
+          "startDate": "={{ $('Edit Fields').item.json.submitted_at }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.2,
+      "position": [
+        1248,
+        96
+      ],
+      "id": "81894dc5-779c-4e48-af40-c48d79b7790a",
+      "name": "Create or update a contact1",
+      "credentials": {
+        "hubspotOAuth2Api": {
+          "id": "nmQKyF8pxJL13hcI",
+          "name": "HubSpot OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Code in JavaScript').item.json.lead_email }}",
+        "subject": "=Thank you for reaching out, {{ $('Code in JavaScript').item.json.lead_first_name }}",
+        "emailType": "text",
+        "message": "=Hi {{ $('Code in JavaScript').item.json.lead_first_name }},\n\nThank you so much for your interest in working with us! We truly appreciate you taking the time to share more about {{ $('Code in JavaScript').item.json.business_name }}.\n\nAfter reviewing your inquiry, we want to be transparent with you. {{ $('Code in JavaScript').item.json.reason }}, we may not be the best fit right now. Our services are designed to deliver serious, measurable growth, and we want to make sure every client we take on gets the full attention and results they deserve.\n\nThat said, we genuinely love what you're building at {{ $('Code in JavaScript').item.json.business_name }} and we'd hate to see budget be the only thing standing between you and real growth.\n\nIf you're open to it, we'd love to hop on a quick 15 minute call, no pressure, no hard sell. Sometimes there's a way to make things work that isn't obvious on paper, and we'd rather have that conversation than leave you without a path forward.\n\n👉 https://calendly.com/prayerjosiah/discovery-call\n\nIf the timing isn't right just yet, no worries at all. We'll keep your details on file and hope to work together when the time is right.\n\nWishing you and {{ $('Code in JavaScript').item.json.business_name }} all the best,\n\nThe Bright Reach Solutions Team",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1472,
+        96
+      ],
+      "id": "0d5f3ca3-9f1f-4ab0-b5e3-7d91002b0f52",
+      "name": "Send a message2",
+      "webhookId": "5525cb03-ec06-4240-b8d0-f9785e0b1460",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "0zRxEVvfl1IfEljL",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0BH6ECCG90",
+          "mode": "list",
+          "cachedResultName": "automation-errors"
+        },
+        "text": "=⚠️ OpenAI API Failed\nLead: {{ $('Edit Fields').item.json['First Name'] }} {{ $('Edit Fields').item.json['Last Name'] }}\nEmail: {{ $('Edit Fields').item.json.Email }}\nError: {{ $json.error.message }}\nAction: Manual qualification needed\nBudget: {{ $('Edit Fields').item.json[\"What's your monthly budget for social media management?\"] }}\nGoal: {{ $('Edit Fields').item.json[\"What's your biggest goal right now?\"] }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        800,
+        192
+      ],
+      "id": "b2803aef-02d0-485a-a178-a7a96eb62b95",
+      "name": "Send a message3",
+      "webhookId": "4ea2efdd-743c-4094-ab9b-c059b29b3a02",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "YcUI4PEXtriJi6m7",
+          "name": "Slack OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "suder.app.n8n.cloud",
+            "user-agent": "Tally Webhooks",
+            "content-length": "2235",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, br",
+            "baggage": "sentry-environment=production,sentry-release=0b759165b09f43b2f56c93f3b73ecbe84c57337c,sentry-public_key=6af4b6673f1648edaa8fef3f2ca43405,sentry-trace_id=e50110c0312367987f3a5f56b7b5cff3,sentry-org_id=407628,sentry-sampled=false,sentry-sample_rand=0.6296527878132004,sentry-sample_rate=0",
+            "cdn-loop": "cloudflare; loops=1; subreqs=1",
+            "cf-connecting-ip": "34.96.62.7",
+            "cf-ew-via": "15",
+            "cf-ipcountry": "BE",
+            "cf-ray": "a1b15eebacdd4e73-CDG",
+            "cf-visitor": "{\"scheme\":\"https\"}",
+            "cf-worker": "n8n.cloud",
+            "content-type": "application/json",
+            "sentry-trace": "e50110c0312367987f3a5f56b7b5cff3-2d4f75bbe75b9338-0",
+            "x-forwarded-for": "34.96.62.7, 172.71.232.126",
+            "x-forwarded-host": "suder.app.n8n.cloud",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik-prod-users-gwc-88-68dff86f78-qtw9m",
+            "x-is-trusted": "yes",
+            "x-real-ip": "34.96.62.7"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "eventId": "07fb6ff9-0e13-4968-8ef7-8b5f8d9efab0",
+            "eventType": "FORM_RESPONSE",
+            "createdAt": "2026-07-14T14:55:51.561Z",
+            "data": {
+              "responseId": "WJpxRYe",
+              "submissionId": "WJpxRYe",
+              "respondentId": "xXgA7pJ",
+              "formId": "rjpb2L",
+              "formName": "BrightReach Marketing Solutions Inquiry",
+              "createdAt": "2026-07-14T14:55:51.000Z",
+              "submissionPdfUrl": "https://api.tally.so/forms/rjpb2L/submissions/WJpxRYe/pdf?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJtaXNzaW9uSWQiOiJXSnB4UlllIiwiZm9ybUlkIjoicmpwYjJMIiwiaWF0IjoxNzg0MDQwOTUxfQ.YR4hI7lRI4X3xVaVnuppo7l3wrZIbnBjY6KXZK8XVMU&signature=1a06419118c9748ad6239a19307648fa625fcc2ebb99508154741434e78e16d6",
+              "submissionPreviewUrl": "https://tally.so/forms/rjpb2L/submissions/WJpxRYe/preview?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJtaXNzaW9uSWQiOiJXSnB4UlllIiwiZm9ybUlkIjoicmpwYjJMIiwiaWF0IjoxNzg0MDQwOTUxfQ.YR4hI7lRI4X3xVaVnuppo7l3wrZIbnBjY6KXZK8XVMU&signature=1a06419118c9748ad6239a19307648fa625fcc2ebb99508154741434e78e16d6",
+              "fields": [
+                {
+                  "key": "question_OLyX8p",
+                  "label": "First Name",
+                  "type": "INPUT_TEXT",
+                  "value": "Max"
+                },
+                {
+                  "key": "question_PlyzkQ",
+                  "label": "Last Name",
+                  "type": "INPUT_TEXT",
+                  "value": "Holloway"
+                },
+                {
+                  "key": "question_VVyPvE",
+                  "label": "Email Address",
+                  "type": "INPUT_EMAIL",
+                  "value": "hollowayy@gmail.com"
+                },
+                {
+                  "key": "question_Ply9vd",
+                  "label": "Business Name",
+                  "type": "INPUT_TEXT",
+                  "value": "Holloway Gym"
+                },
+                {
+                  "key": "question_ELYlvq",
+                  "label": "What type of business do you run?",
+                  "type": "INPUT_TEXT",
+                  "value": "MMA gym"
+                },
+                {
+                  "key": "question_MLyOzE",
+                  "label": "How long have you been in business?",
+                  "type": "INPUT_TEXT",
+                  "value": "we've been in business for about 2 years now"
+                },
+                {
+                  "key": "question_JLYRAz",
+                  "label": "What's your monthly budget for social media management?",
+                  "type": "INPUT_TEXT",
+                  "value": "about 1000"
+                },
+                {
+                  "key": "question_gLrAMM",
+                  "label": "Which platforms are you currently on?",
+                  "type": "TEXTAREA",
+                  "value": "We're currently on Facebook, Instagram, and a bit of Tiktok"
+                },
+                {
+                  "key": "question_VV2RdN",
+                  "label": "What's your biggest goal right now?",
+                  "type": "TEXTAREA",
+                  "value": "We want to be hitting 500k to 1M in engagements per post if possible"
+                },
+                {
+                  "key": "question_2L5A1A",
+                  "label": "Anything else you'd like us to know?",
+                  "type": "TEXTAREA",
+                  "value": "We have celebrity fighters on our belt that can actually pull in views"
+                }
+              ]
+            }
+          },
+          "webhookUrl": "https://suder.app.n8n.cloud/webhook-test/0663cc78-7f8b-4b46-9ba6-391cda5d3231",
+          "executionMode": "test"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create or update a contact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create or update a contact1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create or update a contact": {
+      "main": [
+        [
+          {
+            "node": "Create an engagement",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an engagement": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create or update a contact1": {
+      "main": [
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "9Q0UzOKAiBe8yxXt"
+  },
+  "versionId": "12f2a82e-213e-4391-a70d-acaff5d6065f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7fe7b02f77ce0bdbbb703e0afe924ea6533b4e520a756abb0df409f6a4adb000"
+  },
+  "nodeGroups": [],
+  "id": "jviYJl2n4vDNWGFg",
+  "tags": []
+}
