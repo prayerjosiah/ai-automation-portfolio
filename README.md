@@ -14,7 +14,7 @@ and the workflow architecture.
 Typeform → AI scoring → HubSpot CRM → Slack + email routing, 
 with production error handling (API failure alerts, malformed 
 response recovery, unified error channel).
-→ [Loom Walkthrough](link) | [Workflow JSON](link)
+→ [Loom Walkthrough](https://www.loom.com/share/fe48863287214eb09d9ed794d0c6e815) | [Workflow JSON](link)
 
 ### 🤖 Maya — AI Receptionist
 Conversational AI agent handling lead qualification, booking, 
