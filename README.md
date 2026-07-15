@@ -1,13 +1,32 @@
 # AI Automation Portfolio
 
-Hi, I'm Prayer, an AI Automation Specialist with a background in business operations and executive assistance.
+AI Automation Engineer building production-grade workflows with 
+n8n, Zapier, Make.com, OpenAI, and Pinecone — with a background 
+in business operations that shapes how I design these systems 
+around real operational bottlenecks, not just technical demos.
 
-This repository showcases automation systems I've built using n8n, Zapier, Make.com, OpenAI, HubSpot, and API integrations.
+Each project below includes the live system, a Loom walkthrough, 
+and the workflow architecture.
 
 ## Featured Projects
 
-- AI Lead Qualification
-- Client Onboarding Automation
-- AI Customer Support Assistant
-- Daily Reporting Automation
-- RAG Knowledge Base
+### 🎯 AI Lead Qualification System
+Typeform → AI scoring → HubSpot CRM → Slack + email routing, 
+with production error handling (API failure alerts, malformed 
+response recovery, unified error channel).
+→ [Loom Walkthrough](link) | [Workflow JSON](link)
+
+### 🤖 Maya — AI Receptionist
+Conversational AI agent handling lead qualification, booking, 
+and returning-client updates via a stateful chat interface, with 
+idempotent CRM writes and real-time team alerting.
+→ [Live Demo](link) | [Loom Walkthrough](link) | [Workflow JSON](link)
+
+### 📚 RAG Knowledge Base
+Multi-tenant retrieval system with namespace-based access control 
+— public-facing FAQ/pricing bot and a separate internal SOP/HR 
+assistant, both querying the same Pinecone index.
+→ [Live Demo](link) | [Loom Walkthrough](link) | [Workflow JSON](link)
+
+## Stack
+n8n · Zapier · Make.com · OpenAI · Pinecone · HubSpot · Google Sheets · Slack
