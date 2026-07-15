@@ -11,22 +11,19 @@ and the workflow architecture.
 ## Featured Projects
 
 ### 🎯 AI Lead Qualification System
-Typeform → AI scoring → HubSpot CRM → Slack + email routing, 
-with production error handling (API failure alerts, malformed 
-response recovery, unified error channel).
-→ [Loom Walkthrough](https://www.loom.com/share/fe48863287214eb09d9ed794d0c6e815) | [Workflow JSON](link)
+Typeform → AI scoring → HubSpot CRM → Slack + email routing, with 
+production error handling (API failure alerts, malformed response 
+recovery, unified error channel).
+→ [Watch Demo](https://www.loom.com/share/fe48863287214eb09d9ed794d0c6e815) | [Workflow JSON](https://github.com/prayerjosiah/ai-automation-portfolio/blob/main/workflows/lead-qualification/Social%20Media%20Agency%20(Lead%20Qualification).json) | [Error Handler](https://github.com/prayerjosiah/ai-automation-portfolio/blob/main/workflows/lead-qualification/Spark%20Agency%20-%20Error%20Handler.json)
 
 ### 🤖 Maya — AI Receptionist
-Conversational AI agent handling lead qualification, booking, 
-and returning-client updates via a stateful chat interface, with 
+Conversational AI agent handling lead qualification, booking, and 
+returning-client updates via a stateful chat interface, with 
 idempotent CRM writes and real-time team alerting.
-→ [Live Demo](link) | [Loom Walkthrough](link) | [Workflow JSON](link)
+→ [Watch Demo](YOUR_LOOM_LINK_HERE) | [Workflow JSON](https://github.com/prayerjosiah/ai-automation-portfolio/blob/main/workflows/maya-receptionist/AI%20Receptionist%20_%20Social%20Media%20Agency.json)
 
 ### 📚 RAG Knowledge Base
 Multi-tenant retrieval system with namespace-based access control 
 — public-facing FAQ/pricing bot and a separate internal SOP/HR 
 assistant, both querying the same Pinecone index.
-→ [Live Demo](link) | [Loom Walkthrough](link) | [Workflow JSON](link)
-
-## Stack
-n8n · Zapier · Make.com · OpenAI · Pinecone · HubSpot · Google Sheets · Slack
+→ [Watch Demo](YOUR_LOOM_LINK_HERE) | [Ingestion Pipeline](https://github.com/prayerjosiah/ai-automation-portfolio/blob/main/workflows/rag-knowledge-base/Spark%20Agency%20_%20RAG%20Ingestion%20Pipeline.json) | [Public Query](https://github.com/prayerjosiah/ai-automation-portfolio/blob/main/workflows/rag-knowledge-base/Spark%20Agency%20_%20RAG%20Query%20(Public).json) | [Internal Query](https://github.com/prayerjosiah/ai-automation-portfolio/blob/main/workflows/rag-knowledge-base/Spark%20Agency%20_%20RAG%20Query%20(Internal).json)
