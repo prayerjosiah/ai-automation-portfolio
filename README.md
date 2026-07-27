@@ -37,6 +37,7 @@ Engineering highlights: direct GoHighLevel REST API integration (authenticated P
 
 ### 🏢 Client Acquisition System (Native GoHighLevel)
 Three-workflow lead-to-booking system built entirely in GoHighLevel's native builder — no external orchestration. A form-triggered speed-to-lead workflow scores and routes contacts by intent, feeding a 5-touch nurture sequence that branches on real engagement (link clicks via GHL's Wait for Email Event node, not opens) rather than time alone. A third workflow acts as a hard safeguard, pulling any contact out of active nurture the instant they book — regardless of which touch converted them or whether they replied at all.
+
 Engineering highlights: exact-match branching driven by a controlled custom-field dropdown instead of free text; a fully variablized message layer (booking link, business name, owner name) via Custom Values so the system updates from one place instead of a dozen; GHL's dedicated Internal Notification action used correctly to route staff alerts instead of accidentally texting the lead; and a `Stop on Response` safeguard so the automation yields the moment a real conversation starts.
-Note: GHL doesn't support per-workflow export the way n8n/Zapier do, and Account Snapshots require a paid tier unavailable on this trial account — the Loom and architecture breakdown below serve as the equivalent proof.
+
 → [Watch Demo](https://www.loom.com/share/c851f39cde2346dc83c76b7f303f8659) | [Architecture Breakdown](https://github.com/prayerjosiah/ai-automation-portfolio/blob/main/workflows/GHL-client-acquisition-system/README.md) | [Screenshots](https://github.com/prayerjosiah/ai-automation-portfolio/tree/main/workflows/GHL-client-acquisition-system/Screenshots)
