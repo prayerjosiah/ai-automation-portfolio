@@ -28,7 +28,7 @@ Multi-tenant retrieval system with namespace-based access control
 assistant, both querying the same Pinecone index.
 → [Watch Demo](https://www.loom.com/share/578d78799aec4e5f9b9b43f6e694662d) | [Ingestion Pipeline](https://github.com/prayerjosiah/ai-automation-portfolio/blob/main/workflows/rag-knowledge-base/Spark%20Agency%20_%20RAG%20Ingestion%20Pipeline.json) | [Public Query](https://github.com/prayerjosiah/ai-automation-portfolio/blob/main/workflows/rag-knowledge-base/Spark%20Agency%20_%20RAG%20Query%20(Public).json) | [Internal Query](https://github.com/prayerjosiah/ai-automation-portfolio/blob/main/workflows/rag-knowledge-base/Spark%20Agency%20_%20RAG%20Query%20(Internal).json)
 
-**###⚡AI Lead Qualification & Routing (Zapier + GoHighLevel)**
+### ⚡ AI Lead Qualification & Routing (Zapier + GoHighLevel)
 Two-workflow system demonstrating human-in-the-loop AI automation. Leads submit through a GoHighLevel form; an AI model scores qualification 0–100 and routes via a four-way split — auto-qualify, auto-disqualify, human-review, and a dedicated malformed-response error path. Mid-band leads pause and escalate to Slack with one-click approve/reject; nothing acts on the lead until a human decides. On approval, a second AI step generates personalized outreach referencing the lead's specific business and challenge.
 
 Engineering highlights: direct GoHighLevel REST API integration (authenticated PUT/GET) where the Zapier connector couldn't target custom fields; a JavaScript transform normalizing GHL's raw custom-field arrays into clean named variables; and an idempotency guard that writes decision state before downstream actions to prevent duplicate processing from double-clicks or link pre-fetching. 
